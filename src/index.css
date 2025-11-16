@@ -1,0 +1,33 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-family-outfit: 'Outfit', sans-serif;
+  --font-family-big-shoulders: 'Big Shoulders', sans-serif;
+  --color-text-primary: #121212;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #32619c;
+  --background-color: #f0f0f0;
+  --text-color: #121212;
+  --max-width: 928px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-outfit);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
