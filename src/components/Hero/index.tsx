@@ -141,13 +141,13 @@ const Hero = () => {
                 onMouseLeave={() => setIsHovered(false)}
               >
                 <h1
-                  className="title text-[clamp(4rem,12vw,10rem)] leading-none font-extrabold overflow-hidden text-white"
+                  className="title text-[clamp(4rem,12vw,10rem)] leading-none font-extrabold overflow-hidden text-[#909090]"
                   style={{ fontFamily: 'var(--font-family-big-shoulders)' }}
                 >
                   {mainText}
                 </h1>
                 <p
-                  className="subtitle text-[clamp(1.25rem,2.5vw,1.75rem)] leading-relaxed max-w-[700px] overflow-hidden text-white/90"
+                  className="subtitle text-[clamp(1.25rem,2.5vw,1.75rem)] leading-relaxed max-w-[700px] overflow-hidden text-[#909090]"
                   style={{ fontFamily: 'var(--font-family-outfit)' }}
                 >
                   {subText}

@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import hamburgerIcon from '@/assets/hamburger.svg';
+import closeIcon from '@/assets/close.svg';
 
 interface MenuIconProps {
   isOpen: boolean;
@@ -6,71 +7,9 @@ interface MenuIconProps {
 
 const MenuIcon = ({ isOpen }: MenuIconProps) => {
   return isOpen ? (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <motion.line
-        x1="10"
-        y1="10"
-        x2="30"
-        y2="30"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 0.3 }}
-      />
-      <motion.line
-        x1="30"
-        y1="10"
-        x2="10"
-        y2="30"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 0.3 }}
-      />
-    </svg>
+    <img src={closeIcon} alt="Close" width="24" height="24" />
   ) : (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <motion.line
-        x1="8"
-        y1="13"
-        x2="32"
-        y2="13"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 0.3 }}
-      />
-      <motion.line
-        x1="8"
-        y1="20"
-        x2="32"
-        y2="20"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 0.3 }}
-      />
-      <motion.line
-        x1="8"
-        y1="27"
-        x2="32"
-        y2="27"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 0.3 }}
-      />
-    </svg>
+    <img src={hamburgerIcon} alt="Menu" width="18" height="14" />
   );
 };
 
