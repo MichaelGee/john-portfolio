@@ -59,7 +59,7 @@ const About = () => {
           <CopyAnimation>
             <p
               className="text-[clamp(1.25rem,2vw,1.5rem)] leading-relaxed text-(--text-color) w-full"
-              style={{ fontFamily: 'var(--font-family-outfit)' }}
+              style={{ fontFamily: 'var(--font-family-satoshi)' }}
             >
               I've spent more than a decade building technology that scales from financial systems
               serving millions of users to digital health platforms improving access to care. Along
@@ -91,7 +91,7 @@ const About = () => {
               <CopyAnimation delay={index * 0.1 + 0.1}>
                 <p
                   className="text-[clamp(0.875rem,1.5vw,1rem)] text-(--text-color) uppercase tracking-wider"
-                  style={{ fontFamily: 'var(--font-family-outfit)' }}
+                  style={{ fontFamily: 'var(--font-family-satoshi)' }}
                 >
                   {stat.label}
                 </p>

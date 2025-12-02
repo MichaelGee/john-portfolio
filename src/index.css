@@ -1,11 +1,34 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
+@import url('https://api.fontshare.com/css?f[]=satoshi@400,500,700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: 'Druk';
+  src: url('./assets/fonts/Druk-Bold-Trial.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Druk';
+  src: url('./assets/fonts/Druk-Heavy-Trial.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Druk';
+  src: url('./assets/fonts/Druk-Super-Trial.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
 @theme {
-  --font-family-outfit: 'Outfit', sans-serif;
+  --font-family-satoshi: 'Satoshi', sans-serif;
   --font-family-big-shoulders: 'Big Shoulders', sans-serif;
+  --font-family-druk: 'Druk', sans-serif;
   --color-text-primary: #121212;
   --color-primary: #0172fb;
 }
@@ -17,13 +40,37 @@
     box-sizing: border-box;
     scroll-behavior: smooth;
   }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2.5);
+      opacity: 0;
+    }
+  }
+
+  .pulse-dot {
+    position: relative;
+  }
+
+  .pulse-dot::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-color: #82d97b;
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
 }
 
 :root {
   --primary-color: #0172fb;
   --background-color: #05070c;
   --text-color: #121212;
-  --max-width: 928px;
+  --max-width: 1440px;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -60,7 +107,7 @@
 
 body {
   margin: 0;
-  font-family: var(--font-family-outfit);
+  font-family: var(--font-family-satoshi);
   background-color: var(--background-color);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;

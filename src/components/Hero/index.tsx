@@ -1,200 +1,181 @@
-import { useRef, useEffect, useState } from 'react';
-import gsap from 'gsap';
-import SplitText from 'gsap/SplitText';
-import { motion } from 'framer-motion';
-import ViewportDetector from '../ViewportDetector';
-import heroImage from '../../assets/img1.jpg';
-import { useMousePosition } from '../../hooks/useMousePosition';
-
-gsap.registerPlugin(SplitText);
+import smokeImage from '@/assets/smoke.png';
+import trackImage from '@/assets/track.png';
+import Scroll from '@/assets/scroll.svg';
+import Marquee from '../Marquee';
+import ImageCard from '../ImageCard';
+import CopyAnimation from '../CopyAnimation';
 
 const Hero = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const textAreaRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const { x, y } = useMousePosition();
-  const size = isHovered ? 400 : 40;
-  const splitInstancesRef = useRef<{ hero: SplitText | null; paragraph: SplitText | null }>({
-    hero: null,
-    paragraph: null,
-  });
-
-  const mainText = 'JOHN OJETUNDE';
-  const subText =
-    "Hi, I'm John Ojetunde — a two-time founder, engineer, and photographer dedicated to building systems that work beautifully at scale.";
-
-  useEffect(() => {
-    const instances = splitInstancesRef.current;
-    return () => {
-      instances.hero?.revert();
-      instances.paragraph?.revert();
-    };
-  }, []);
-
-  const animateText = (inView: boolean) => {
-    if (!inView || !containerRef.current || hasAnimated) return;
-
-    setHasAnimated(true);
-
-    const heroSplit = new SplitText('.title', { type: 'chars, words' });
-    const paragraphSplit = new SplitText('.subtitle', { type: 'lines' });
-
-    splitInstancesRef.current.hero = heroSplit;
-    splitInstancesRef.current.paragraph = paragraphSplit;
-
-    heroSplit.chars.forEach(char => {
-      char.classList.add('text-gradient');
-    });
-
-    const tl = gsap.timeline();
-
-    tl.fromTo(
-      imageRef.current,
-      {
-        scale: 1.4,
-        clipPath: 'inset(100% 0% 0% 0%)',
-      },
-      {
-        scale: 1,
-        clipPath: 'inset(0% 0% 0% 0%)',
-        duration: 2,
-        ease: 'expo.out',
-      }
-    )
-      .fromTo(
-        heroSplit.chars,
-        { yPercent: 100 },
-        {
-          yPercent: 0,
-          duration: 1.8,
-          ease: 'expo.out',
-          stagger: 0.05,
-        },
-        '-=1.5'
-      )
-      .fromTo(
-        paragraphSplit.lines,
-        { opacity: 0, yPercent: 100 },
-        {
-          opacity: 1,
-          yPercent: 0,
-          duration: 1.8,
-          ease: 'expo.out',
-          stagger: 0.1,
-        },
-        '-=1.2'
-      );
-  };
-
   return (
-    <ViewportDetector once={true} amount={0.3}>
-      {isInView => {
-        if (isInView && !hasAnimated) {
-          requestAnimationFrame(() => animateText(isInView));
-        }
-        return (
-          <section
-            ref={containerRef}
-            className="min-h-screen flex items-center justify-center py-32 relative"
-          >
-            {/* Main background with grayscale and gradient */}
-            <div ref={imageRef} className="absolute inset-0 w-full h-full overflow-hidden">
-              <div className="absolute inset-0 bg-linear-to-r from-black/60 via-black/40 to-transparent z-10" />
-              <img
-                src={heroImage}
-                alt="John Ojetunde"
-                className="w-full h-full object-cover grayscale"
-              />
-            </div>
+    <section className="min-h-screen flex items-center justify-center relative py-32">
+      <div className="absolute inset-0 w-full h-full z-0">
+        <img
+          src={trackImage}
+          alt="Track Background"
+          className="w-full object-cover opacity-[0.5] bottom-0 absolute h-[30rem]"
+        />
+      </div>
+      <div className="absolute inset-0 w-full h-full z-10">
+        <img src={smokeImage} alt="Smoke Overlay" className="w-full h-full object-cover" />
+      </div>
 
-            {/* Mask revealing color image */}
-            <motion.div
-              className="absolute inset-0 w-full h-full overflow-hidden z-20 pointer-events-none"
-              animate={{
-                maskPosition: `${x - size / 2}px ${y - size / 2}px`,
-                maskSize: `${size}px`,
-              }}
-              transition={{ type: 'tween', ease: 'backOut', duration: 0.5 }}
-              style={{
-                maskImage:
-                  'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjIwMCIgZmlsbD0id2hpdGUiLz48L3N2Zz4=)',
-                maskRepeat: 'no-repeat',
-                WebkitMaskImage:
-                  'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjIwMCIgZmlsbD0id2hpdGUiLz48L3N2Zz4=)',
-                WebkitMaskRepeat: 'no-repeat',
-              }}
-            >
-              <img
-                src={heroImage}
-                alt="John Ojetunde Color"
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-
-            <div className="page-guard-rail relative z-30">
-              <div
-                ref={textAreaRef}
-                className="flex flex-col gap-12"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
-                <h1
-                  className="title text-[clamp(4rem,12vw,10rem)] leading-none font-extrabold overflow-hidden text-[#909090]"
-                  style={{ fontFamily: 'var(--font-family-big-shoulders)' }}
-                >
-                  {mainText}
-                </h1>
+      {/* Content wrapper with relative positioning */}
+      <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 md:px-[4.25rem]">
+        <div className="page-guard-rail relative">
+          {/* Desktop Layout */}
+          <div className="hidden lg:grid lg:grid-cols-[1.2fr_1fr_1.2fr] gap-12 items-center mb-24 mt-16">
+            {/* Left Content */}
+            <div className="flex flex-col gap-6 overflow-visible">
+              <CopyAnimation>
                 <p
-                  className="subtitle text-[clamp(1.25rem,2.5vw,1.75rem)] leading-relaxed max-w-[700px] overflow-hidden text-[#909090]"
-                  style={{ fontFamily: 'var(--font-family-outfit)' }}
+                  className="text-[1rem] font-normal text-[#D0D4EC]"
+                  style={{ fontFamily: 'var(--font-family-satoshi)' }}
                 >
-                  {subText}
+                  JOHN ÓJẸ́TÚNDÉ
                 </p>
+              </CopyAnimation>
+
+              <CopyAnimation>
+                <h1
+                  className="text-[5rem] leading-none font-extrabold text-white overflow-visible whitespace-nowrap"
+                  style={{
+                    fontFamily: 'var(--font-family-druk)',
+                    overflow: 'visible !important',
+                  }}
+                >
+                  VISIONARY
+                </h1>
+              </CopyAnimation>
+
+              <div
+                className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[#272D3D] w-fit relative"
+                style={{
+                  backdropFilter: 'blur(10px)',
+                  border: '0.57px solid transparent',
+                  backgroundImage:
+                    'linear-gradient(#272D3D, #272D3D), linear-gradient(to bottom, #7A9DF7, #24272E, #24272E)',
+                  backgroundOrigin: 'border-box',
+                  backgroundClip: 'padding-box, border-box',
+                }}
+              >
+                <div className="w-2 h-2 rounded-full bg-[#82D97B] pulse-dot" />
+                <span
+                  className="text-[0.75rem] font-normal text-[#D0D4EC]"
+                  style={{ fontFamily: 'var(--font-family-satoshi)' }}
+                >
+                  DESIGNING SYSTEMS & LEADING TEAMS
+                </span>
               </div>
             </div>
 
-            {/* Mask revealing primary color text */}
-            <motion.div
-              className="absolute inset-0 w-full h-full overflow-hidden z-40 pointer-events-none"
-              animate={{
-                maskPosition: `${x - size / 2}px ${y - size / 2}px`,
-                maskSize: `${size}px`,
-              }}
-              transition={{ type: 'tween', ease: 'backOut', duration: 0.5 }}
+            {/* Center Image */}
+            <div className="flex justify-center items-center">
+              <ImageCard />
+            </div>
+
+            {/* Right Content */}
+            <div className="flex flex-col gap-6 items-end text-right mt-20">
+              <CopyAnimation>
+                <h1
+                  className="text-[5rem] leading-none font-extrabold text-white"
+                  style={{ fontFamily: 'var(--font-family-druk)' }}
+                >
+                  POLYMATH
+                </h1>
+              </CopyAnimation>
+
+              <CopyAnimation>
+                <p
+                  className="text-[1rem] font-normal text-[#D0D4EC] leading-relaxed max-w-[280px]"
+                  style={{ fontFamily: 'var(--font-family-satoshi)' }}
+                >
+                  Building systems and stories that last — through software, mentorship, and
+                  photography
+                </p>
+              </CopyAnimation>
+            </div>
+          </div>
+
+          {/* Mobile Layout */}
+          <div className="lg:hidden flex flex-col items-center gap-8 mb-24">
+            <CopyAnimation>
+              <p
+                className="text-[1rem] font-normal text-[#D0D4EC] text-center"
+                style={{ fontFamily: 'var(--font-family-satoshi)' }}
+              >
+                JOHN ÓJẸ́TÚNDÉ
+              </p>
+            </CopyAnimation>
+
+            <CopyAnimation>
+              <h1
+                className="text-[3rem] leading-none font-extrabold text-white text-center"
+                style={{ fontFamily: 'var(--font-family-druk)' }}
+              >
+                VISIONARY
+              </h1>
+            </CopyAnimation>
+
+            <ImageCard />
+
+            <CopyAnimation>
+              <h1
+                className="text-[3rem] leading-none font-extrabold text-white text-center"
+                style={{ fontFamily: 'var(--font-family-druk)' }}
+              >
+                POLYMATH
+              </h1>
+            </CopyAnimation>
+
+            <div
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[#272D3D] relative"
               style={{
-                maskImage:
-                  'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjIwMCIgZmlsbD0id2hpdGUiLz48L3N2Zz4=)',
-                maskRepeat: 'no-repeat',
-                WebkitMaskImage:
-                  'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjIwMCIgZmlsbD0id2hpdGUiLz48L3N2Zz4=)',
-                WebkitMaskRepeat: 'no-repeat',
+                backdropFilter: 'blur(10px)',
+                border: '0.57px solid transparent',
+                backgroundImage:
+                  'linear-gradient(#272D3D, #272D3D), linear-gradient(to right, #7A9DF7, #24272E, #24272E)',
+                backgroundOrigin: 'border-box',
+                backgroundClip: 'padding-box, border-box',
               }}
             >
-              <div className="w-full h-full flex items-center justify-center py-32">
-                <div className="page-guard-rail w-full">
-                  <div className="flex flex-col gap-12">
-                    <h1
-                      className="text-[clamp(4rem,12vw,10rem)] leading-none font-extrabold overflow-hidden text-(--primary-color)"
-                      style={{ fontFamily: 'var(--font-family-big-shoulders)' }}
-                    >
-                      {mainText}
-                    </h1>
-                    <p
-                      className="text-[clamp(1.25rem,2.5vw,1.75rem)] leading-relaxed max-w-[700px] overflow-hidden text-(--primary-color)"
-                      style={{ fontFamily: 'var(--font-family-outfit)' }}
-                    >
-                      {subText}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </section>
-        );
-      }}
-    </ViewportDetector>
+              <div className="w-2 h-2 rounded-full bg-[#82D97B] pulse-dot" />
+              <span
+                className="text-[0.75rem] font-normal text-[#D0D4EC]"
+                style={{ fontFamily: 'var(--font-family-satoshi)' }}
+              >
+                DESIGNING SYSTEMS & LEADING TEAMS
+              </span>
+            </div>
+
+            <CopyAnimation>
+              <p
+                className="text-[0.875rem] font-normal text-[#D0D4EC] leading-relaxed text-center max-w-[320px]"
+                style={{ fontFamily: 'var(--font-family-satoshi)' }}
+              >
+                Building systems and stories that last — through software, mentorship, and
+                photography
+              </p>
+            </CopyAnimation>
+          </div>
+
+          {/* Marquee at bottom */}
+          <Marquee />
+
+          {/* Scroll indicator - positioned relative to content */}
+          <div className="hidden lg:flex absolute -right-12  top-[26rem] flex-col items-center gap-1">
+            <div className="text-[3rem] font-bold text-white leading-none">
+              <img src={Scroll} alt="Scroll Down" className="w-5 h-5 mx-auto mb-2" />
+            </div>
+            <p
+              className="text-[0.6875rem] font-normal text-[#D0D4EC] uppercase tracking-wider"
+              style={{ fontFamily: 'var(--font-family-satoshi)' }}
+            >
+              SCROLL
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

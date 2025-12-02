@@ -15,7 +15,7 @@ type CopyAnimationProps = {
 const CopyAnimation: React.FC<CopyAnimationProps> = ({
   children,
   animateOnScroll = true,
-  delay = 0,
+  delay = 0.8,
 }) => {
   const constainerRef = useRef<HTMLDivElement>(null);
   const elementRef = useRef<HTMLDivElement[]>([]);
