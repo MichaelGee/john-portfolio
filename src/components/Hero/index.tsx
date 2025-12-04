@@ -4,6 +4,7 @@ import Scroll from '@/assets/scroll.svg';
 import Marquee from '../Marquee';
 import ImageCard from '../ImageCard';
 import CopyAnimation from '../CopyAnimation';
+import BottomBorder from '../BottomBorder';
 
 const Hero = () => {
   return (
@@ -175,6 +176,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      <BottomBorder />
     </section>
   );
 };

@@ -1,5 +1,9 @@
 import Navbar from '@/components/Navbar/Navbar';
 import Hero from '@/components/Hero';
+import Nexus from '@/components/Nexus';
+import MeetJohn from '@/components/MeetJohn';
+import Specialties from '@/components/Specialties';
+import Experience from '@/components/Experience';
 // import About from '@/components/About';
 
 function Home() {
@@ -7,7 +11,10 @@ function Home() {
     <>
       <Navbar />
       <Hero />
-      {/* <About /> */}
+      <Nexus />
+      <MeetJohn />
+      <Specialties />
+      <Experience />
     </>
   );
 }

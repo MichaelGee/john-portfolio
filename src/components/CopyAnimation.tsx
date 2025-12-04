@@ -64,7 +64,7 @@ const CopyAnimation: React.FC<CopyAnimationProps> = ({
           ...animationProps,
           scrollTrigger: {
             trigger: constainerRef.current,
-            start: 'top 75%',
+            start: 'top 80%',
             once: true,
           },
         });
