@@ -4,6 +4,7 @@ import Nexus from '@/components/Nexus';
 import MeetJohn from '@/components/MeetJohn';
 import Specialties from '@/components/Specialties';
 import Experience from '@/components/Experience';
+import Optics from '@/components/Optics';
 // import About from '@/components/About';
 
 function Home() {
@@ -15,6 +16,7 @@ function Home() {
       <MeetJohn />
       <Specialties />
       <Experience />
+      <Optics />
     </>
   );
 }
